@@ -42,7 +42,16 @@
 
 ## G. GitHub 작업 결과
 
-작업 브랜치, commit SHA, Pull Request URL과 hosted CI 결과는 이 보고서를 포함한 Pull Request에 표시합니다. 원본 저장소에는 변경을 수행하지 않습니다. 공개 PR은 라이선스·호스트 게이트가 남아 있는 동안 Draft로 유지합니다.
+| 항목 | 결과 |
+| --- | --- |
+| 작업 브랜치 | `codex/vea-shared-contract-foundation` |
+| 초기 구현 commit | `15cfd0c2d53a16210d739c4687e16c62c5fbacd0` |
+| Pull Request | [#1 — shared contract foundation](https://github.com/Milonea/Video-Editing-Automation/pull/1), Draft |
+| hosted CI | `validate` run #1 — PASS on initial implementation commit |
+| 변경량 | 36 files, 1 commit at initial PR creation |
+| 원본 저장소 | 변경 없음 |
+
+이 보고서 보정은 문서 변경이며 새 PR head에서 CI가 다시 실행됩니다. 현재 PR Checks가 최신 head 상태의 기준입니다. 공개 PR은 라이선스·호스트 게이트가 남아 있는 동안 Draft로 유지합니다.
 
 ## H. 요구사항 일치 여부
 

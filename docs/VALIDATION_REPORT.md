@@ -14,7 +14,7 @@
 | `python tools/check_public_hygiene.py` | PASS — Secret/경로/미디어 파일 검사 |
 | `python tools/check_policy_integrity.py` | PASS — 기존 저장소 정책 및 프로젝트 데이터 경계 확인 |
 
-GitHub Actions hosted CI는 PR 생성 후 별도로 확인하며, 로컬 통과를 hosted 결과로 대체하지 않습니다.
+GitHub Actions `validate` run #1은 PR 초기 구현 commit `15cfd0c2d53a16210d739c4687e16c62c5fbacd0`에서 PASS했습니다. 문서 보정 후의 최신 head 검사는 PR Checks에서 다시 확인하며 로컬 통과를 hosted 결과로 대체하지 않습니다.
 
 ## 보안 및 공개 자료 검사
 
