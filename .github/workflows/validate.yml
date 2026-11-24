@@ -29,6 +29,12 @@ jobs:
         run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
       - name: Install media engine without optional backends
         run: python -m pip install --disable-pip-version-check --no-deps -e ./engine
+      - name: Install FFmpeg for media integration tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
+          ffmpeg -version
+          ffprobe -version
       - name: Validate contract schemas and fixtures
         run: python tools/validate_contracts.py
       - name: Run Python tests
