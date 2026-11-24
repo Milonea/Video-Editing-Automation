@@ -18,9 +18,11 @@
 | 문서 내부 링크 | PASS |
 | Secret·개인 경로·금지 미디어 파일 Hygiene | PASS — 147 files scanned |
 | 대상 저장소 정책 무결성 검사 | PASS |
-| GitHub hosted CI | 현재 PR의 새 migration commit을 push한 뒤 확인 예정 |
+| GitHub hosted CI | PASS — migration/CI commit `6ba598a33f493f030b683cb8912620819a5f2726`; [validate run #4](https://github.com/Milonea/Video-Editing-Automation/actions/runs/45343869857) |
 
 기본 개발 의존성에 pytest만 추가했으며 Whisper 모델·CUDA runtime·Adobe SDK는 설치하지 않았습니다. Node 테스트 중 npm 환경이 http-proxy 설정 경고를 출력했지만 검사 결과는 PASS였습니다.
+
+첫 hosted migration run #3은 Ubuntu runner에 FFmpeg/FFprobe가 없어 전사 테스트 5개가 실패했습니다. workflow에 FFmpeg 설치 단계를 추가한 뒤 run #4에서 엔진 테스트를 포함한 aggregate CI 전체가 PASS했습니다.
 
 ## 공개 자료 검사 범위
 

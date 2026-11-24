@@ -48,7 +48,7 @@
 
 | 환경 | 상태 |
 | --- | --- |
-| Linux 컨테이너 자동 테스트 | PASS — 공통 계약, 113 Python 엔진 테스트, 54 JavaScript 테스트 |
+| Linux 컨테이너 자동 테스트 | PASS — 공통 계약, FFmpeg 포함 113 Python 엔진 테스트, 54 JavaScript 테스트 |
 | macOS 개발 | 코드·설정·경량 profile 준비; Apple Silicon M2/8GB 실측 PENDING_VALIDATION |
 | Windows 프로덕션 | 설치 스크립트·CUDA 선택 설정 이전; 사용자 Windows 시스템 실측 PENDING_VALIDATION |
 | CPU/CUDA/MLX | CPU/CUDA 경로와 선택 의존성 이전; 실제 런타임 미검증. MLX는 미구현 |
@@ -77,10 +77,10 @@
 
 - 작업 브랜치: codex/vea-shared-contract-foundation
 - Pull Request: [#1 — Video Editing Automation migration](https://github.com/Milonea/Video-Editing-Automation/pull/1), Draft
-- 기존 foundation commit과 migration commit은 PR commit 목록에서 확인합니다.
+- Commit: `15cfd0c2d53a16210d739c4687e16c62c5fbacd0` (shared contract foundation), `e906820965548b74718ff387361783cd060f4e56` (foundation status), `8419cbd221849f1880427e53ea857164ea4b1adf` (engine/editor migration), `6ba598a33f493f030b683cb8912620819a5f2726` (CI FFmpeg dependency).
+- Hosted CI: PASS on commit `6ba598a33f493f030b683cb8912620819a5f2726`, [validate run #4](https://github.com/Milonea/Video-Editing-Automation/actions/runs/45343869857). Earlier run #3 exposed the missing FFmpeg dependency; the CI workflow was corrected and the full aggregate check then passed.
 - PR은 Draft로 유지합니다. 실제 Windows/Premiere/Apple Silicon/CUDA/외장 Workspace 검증과 사용자 리뷰가 남아 있습니다.
 - 대상 저장소 main에 병합하지 않았고 branch protection/승인 정책을 우회하지 않았습니다.
-- 새 migration commit의 GitHub Actions 결과는 push 후 PR Checks에서 확인합니다.
 
 ## H. 요구사항 일치 여부
 
@@ -98,7 +98,7 @@
 | 설정 계층과 실행 profile | PASS | common→OS→profile→local→project→explicit→CLI 구현 및 테스트 |
 | 외장 Workspace/macOS↔Windows 연속 작업 | PENDING_VALIDATION | resolver/config 이전; 실제 두 OS 교차 사용 미검증 |
 | 비파괴 편집 및 승인 안전성 | PARTIAL | plan/safe primitive/host approval unit tests PASS; 실제 host 적용 검증 대기 |
-| 자동 테스트와 문서화 | PASS | Python/JS/Schema/docs/hygiene/policy 로컬 PASS; hosted CI push 후 확인 |
+| 자동 테스트와 문서화 | PASS | Python/JS/Schema/docs/hygiene/policy 로컬 PASS; aggregate hosted CI run #4 PASS |
 | 개인정보·Secret·미디어 제외 | PASS | 공개 검사 PASS, 이번 변경에 콘텐츠 파일 없음 |
 | Multi Agent Industry 독립성 | PASS | 필수 의존성이나 외부 인증 추가 없음 |
 | 실제 Premiere/Windows/GPU/macOS 검증 | PENDING_VALIDATION | 현재 실행 환경에서 수행하지 않음 |
