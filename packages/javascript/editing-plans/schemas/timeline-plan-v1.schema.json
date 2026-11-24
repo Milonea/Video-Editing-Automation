@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "timeline-plan-v1",
+  "type": "object",
+  "required": ["schema_version", "plan_id", "sequence_id", "operations"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "plan_id": {"type": "string", "minLength": 1},
+    "sequence_id": {"type": "string", "minLength": 1},
+    "operations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/operation"}
+    },
+    "metadata": {"type": "object"}
+  },
+  "$defs": {
+    "track": {
+      "type": "object",
+      "required": ["type", "index"],
+      "properties": {
+        "type": {"enum": ["video", "audio"]},
+        "index": {"type": "integer", "minimum": 0}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_id"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "format": "uri"},
+        "captured_at": {"type": "string"},
+        "note": {"type": "string"}
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": ["id", "action", "track", "start", "duration", "provenance"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "action": {"enum": ["insert_media", "insert_mogrt", "insert_audio", "caption", "set_text"]},
+        "track": {"$ref": "#/$defs/track"},
+        "start": {"type": "number", "minimum": 0},
+        "duration": {"type": "number", "exclusiveMinimum": 0},
+        "asset": {"type": ["object", "null"]},
+        "source_cue": {"type": ["object", "null"]},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "metadata": {"type": "object"}
+      }
+    }
+  }
+}
+

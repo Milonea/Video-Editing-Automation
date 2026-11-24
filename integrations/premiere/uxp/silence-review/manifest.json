@@ -1,0 +1,27 @@
+{
+  "manifestVersion": 5,
+  "id": "com.vea.smart-silence-review",
+  "name": "VEA Silence Review",
+  "version": "1.1.2",
+  "requiredPermissions": {
+    "localFileSystem": "request"
+  },
+  "main": "index.html",
+  "host": {
+    "app": "premierepro",
+    "minVersion": "26.2.0"
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "veaSilenceReviewPanel",
+      "label": {
+        "default": "VEA Silence Review"
+      },
+      "minimumSize": {
+        "width": 310,
+        "height": 240
+      }
+    }
+  ]
+}

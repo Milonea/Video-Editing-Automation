@@ -1,0 +1,50 @@
+# Shared, host-independent VEA defaults. Machine paths belong in the ignored
+# user config, not in this repository.
+
+[workspace]
+workspace_id = "work-ssd"
+manifest_name = ".vea-workspace.json"
+projects_relative_path = "VideoProjects"
+video_workspace_root = ""
+
+[project]
+sequence_fps = ""
+audio_sample_rate = 48000
+audio_crossfade_ms = 5
+hash_media = false
+copy_source_to_package = false
+
+[audio]
+# These remain empty until a person has listened to the preview files.
+selected_voice_stream_indexes = []
+track_signature = ""
+
+[transcription]
+model = "large-v3"
+fallback_models = ["large-v3-turbo", "medium"]
+device = "auto"
+compute_type = "auto"
+language = "ko"
+beam_size = 5
+chunk_seconds = 600
+word_timestamps = false
+cpu_fallback = false
+
+[runtime]
+ffmpeg_threads = 1
+
+[smart_silence_split]
+enabled = true
+mode = "split"
+subtitle_tail_seconds = 0.5
+min_silence_gap_seconds = 0.8
+auto_delete = false
+preserve_original_project = true
+preserve_original_sequence = true
+preserve_all_audio_tracks = true
+preserve_subtitles = true
+preserve_video_effects = true
+split_on_frame_boundaries = true
+create_review_sequence = true
+generate_validation_report = true
+generate_silence_candidate_list = true

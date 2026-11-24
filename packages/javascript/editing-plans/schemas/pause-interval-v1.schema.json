@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pause-interval-v1",
+  "type": "object",
+  "required": ["schema_version", "intervals"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "intervals": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/interval"}},
+    "allow_cut": {"const": false}
+  },
+  "$defs": {
+    "provenance": {"type": "object", "required": ["source_id"], "properties": {"source_id": {"type": "string", "minLength": 1}, "source_url": {"type": "string", "format": "uri"}, "captured_at": {"type": "string"}}, "additionalProperties": true},
+    "interval": {
+      "type": "object",
+      "required": ["id", "start", "end", "approved", "provenance"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "start": {"type": "number", "minimum": 0},
+        "end": {"type": "number", "exclusiveMinimum": 0},
+        "padding": {"type": "number", "minimum": 0},
+        "track_group": {"type": "string", "minLength": 1},
+        "approved": {"const": true},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "boundary_types": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    }
+  }
+}
+

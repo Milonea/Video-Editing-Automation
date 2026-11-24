@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "mode": "isolated_insert",
+  "target": {"asset_id": "subject-image.png", "format": "png", "start": 0, "duration": 5, "width": 1920, "height": 1080, "alpha": "preserved", "crop": "fit", "placeholder": "none"}
+}
+

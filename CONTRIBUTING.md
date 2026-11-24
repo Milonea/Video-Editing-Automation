@@ -1,14 +1,23 @@
-# Contributing
+# 기여 안내
 
-The repository lifecycle is defined in AGENTS.md and .codex/WORKFLOW.md. Project-specific commands, personas, and data boundaries belong in .codex/PROJECT_PROFILE.md.
+저장소의 작업 권한, Git 안전 규칙, Pull Request 및 병합 절차는 [`AGENTS.md`](AGENTS.md)와 [`.codex/WORKFLOW.md`](.codex/WORKFLOW.md)를 따릅니다. 프로젝트 명령과 데이터 경계는 [`.codex/PROJECT_PROFILE.md`](.codex/PROJECT_PROFILE.md)에 기록합니다.
 
-Routine changes follow this path:
+일반 작업은 다음 순서로 진행합니다.
 
-1. Inspect existing work and the current default branch.
-2. Make a scoped change on a task branch.
-3. Run relevant project checks and the required pull request workflow.
-4. Commit and push the task branch, then create or update its pull request.
-5. Merge after all required checks pass and no manual gate remains.
-6. Verify the merged default branch and report the result.
+1. 기본 브랜치, 기존 작업과 열린 Pull Request를 확인합니다.
+2. 범위가 명확한 작업 브랜치에서 변경합니다.
+3. 관련 검증과 Pull Request 필수 검사를 실행합니다.
+4. 검증 증거와 수동 검증 항목을 Pull Request에 기록합니다.
+5. 요구 검사가 통과하고 차단 사유가 없을 때 저장소 정책에 따라 병합합니다.
+6. 기본 브랜치의 결과와 필요한 후속 검증을 확인합니다.
 
-Keep the pull request small enough to review as one logical change. Split unrelated changes into separate pull requests.
+## 이 저장소의 공개 데이터 경계
+
+- 실제 원본 영상, 오디오, Premiere/After Effects 프로젝트, 개인 확장팩, MOGRT 및 고객 자료를 커밋하지 않습니다.
+- 계정 토큰, Persistent Token, API Key, 사용자 이름이 포함된 절대 경로와 개인 장치 식별값을 커밋하지 않습니다.
+- 공개 프레임워크 코드는 root MIT License 범위로 관리합니다. 포함되는 제3자 구성 요소에는 별도 notice와 권리 검토가 필요합니다.
+- 사용자가 로컬에서 제작·수정하는 이미지·음원·MOGRT, 콘텐츠 DB와 개인 확장팩은 저장소에 커밋하지 않습니다.
+- 재배포 권리가 확인되지 않은 Adobe SDK, 글꼴, 템플릿과 미디어 자산을 가져오지 않습니다.
+- 실제 Premiere 호스트에서 수행하지 않은 검증을 완료로 표시하지 않습니다.
+
+PR 하나는 검토 가능한 단일 변경 단위로 유지합니다. 범용 계약, 엔진 이전, 편집기 통합은 필요할 때 별도 PR로 나눕니다.

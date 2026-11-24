@@ -1,0 +1,7 @@
+# Install VEA with: python -m pip install -e ".[macos,dev]"
+# FFmpeg and FFprobe are external binaries and are checked at runtime.
+# faster-whisper runs on CPU on macOS; MLX is detected but not wired as a VEA backend.
+faster-whisper==1.2.1
+# faster-whisper 1.2.1 passes metadata_errors to av.open(); PyAV 19 removed that
+# argument, so keep PyAV below 19 until a compatible faster-whisper release is pinned.
+av>=11,<19

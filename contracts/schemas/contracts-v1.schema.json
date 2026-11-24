@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:video-editing-automation:contracts:v1",
+  "title": "Video Editing Automation shared contracts",
+  "description": "Language-neutral data contracts. Timeline positions are integer frames on an explicit rational frame rate.",
+  "$ref": "#/$defs/ProjectManifest",
+  "$defs": {
+    "SchemaVersion": { "type": "integer", "const": 1 },
+    "Rational": {
+      "type": "object",
+      "properties": {
+        "numerator": { "type": "integer", "minimum": 1 },
+        "denominator": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["numerator", "denominator"],
+      "additionalProperties": false
+    },
+    "Timecode": {
+      "type": "object",
+      "properties": {
+        "format": { "type": "string", "enum": ["non_drop_frame", "drop_frame"] },
+        "value": { "type": "string", "pattern": "^\\d{2}:\\d{2}:\\d{2}[:;]\\d{2}$" },
+        "nominal_frame_rate": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["format", "value", "nominal_frame_rate"],
+      "allOf": [
+        {
+          "if": { "properties": { "format": { "const": "drop_frame" } }, "required": ["format"] },
+          "then": { "properties": { "value": { "pattern": "^\\d{2}:\\d{2}:\\d{2};\\d{2}$" } } },
+          "else": { "properties": { "value": { "pattern": "^\\d{2}:\\d{2}:\\d{2}:\\d{2}$" } } }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "TrackReference": {
+      "type": "object",
+      "properties": {
+        "track_id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["video", "audio", "caption", "data"] },
+        "index": { "type": "integer", "minimum": 0 },
+        "name": { "type": "string" }
+      },
+      "required": ["track_id", "kind", "index"],
+      "additionalProperties": false
+    },
+    "MediaStream": {
+      "type": "object",
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "kind": { "type": "string", "enum": ["video", "audio", "subtitle", "data", "unknown"] },
+        "codec": { "type": "string" },
+        "frame_rate": { "$ref": "#/$defs/Rational" },
+        "sample_rate_hz": { "type": "integer", "minimum": 1 },
+        "channels": { "type": "integer", "minimum": 1 },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "language": { "type": "string" }
+      },
+      "required": ["index", "kind"],
+      "additionalProperties": false
+    },
+    "MediaAsset": {
+      "type": "object",
+      "properties": {
+        "asset_id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["video", "audio", "image", "graphic", "mogrt", "subtitle", "other"] },
+        "relative_path": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" },
+        "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "streams": { "type": "array", "items": { "$ref": "#/$defs/MediaStream" } },
+        "metadata": { "type": "object" }
+      },
+      "required": ["asset_id", "kind", "relative_path", "required"],
+      "additionalProperties": false
+    },
+    "AssetIndex": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "index_id": { "type": "string", "minLength": 1 },
+        "assets": { "type": "array", "items": { "$ref": "#/$defs/MediaAsset" } }
+      },
+      "required": ["schema_version", "index_id", "assets"],
+      "additionalProperties": false
+    },
+    "ProjectManifest": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "project_id": { "type": "string", "minLength": 1 },
+        "workspace_id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "framework_version": { "type": "string", "minLength": 1 },
+        "asset_index": { "type": "string", "minLength": 1 },
+        "metadata": { "type": "object" }
+      },
+      "required": ["schema_version", "project_id", "workspace_id", "name", "created_at", "framework_version", "asset_index"],
+      "additionalProperties": false
+    },
+    "TimelineClip": {
+      "type": "object",
+      "properties": {
+        "clip_id": { "type": "string", "minLength": 1 },
+        "asset_id": { "type": "string", "minLength": 1 },
+        "track_id": { "type": "string", "minLength": 1 },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "end_frame": { "type": "integer", "minimum": 1 },
+        "source_in_frame": { "type": "integer", "minimum": 0 },
+        "source_out_frame": { "type": "integer", "minimum": 1 },
+        "label": { "type": "string" },
+        "metadata": { "type": "object" }
+      },
+      "required": ["clip_id", "asset_id", "track_id", "start_frame", "end_frame", "source_in_frame", "source_out_frame"],
+      "additionalProperties": false
+    },
+    "TimelineIR": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "project_id": { "type": "string", "minLength": 1 },
+        "timeline_id": { "type": "string", "minLength": 1 },
+        "frame_rate": { "$ref": "#/$defs/Rational" },
+        "drop_frame": { "type": "boolean" },
+        "tracks": { "type": "array", "items": { "$ref": "#/$defs/TrackReference" } },
+        "clips": { "type": "array", "items": { "$ref": "#/$defs/TimelineClip" } },
+        "metadata": { "type": "object" }
+      },
+      "required": ["schema_version", "project_id", "timeline_id", "frame_rate", "drop_frame", "tracks", "clips"],
+      "additionalProperties": false
+    },
+    "PlanOperation": {
+      "type": "object",
+      "properties": {
+        "operation_id": { "type": "string", "minLength": 1 },
+        "action": { "type": "string", "enum": ["insert_media", "insert_audio", "insert_mogrt", "add_caption", "split_clip", "add_marker"] },
+        "asset_id": { "type": "string", "minLength": 1 },
+        "track": { "$ref": "#/$defs/TrackReference" },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "duration_frames": { "type": "integer", "minimum": 1 },
+        "collision_policy": { "type": "string", "enum": ["block", "skip", "overlay"] },
+        "metadata": { "type": "object" }
+      },
+      "required": ["operation_id", "action", "track", "start_frame", "duration_frames", "collision_policy"],
+      "additionalProperties": false
+    },
+    "EditPlan": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "plan_id": { "type": "string", "minLength": 1 },
+        "project_id": { "type": "string", "minLength": 1 },
+        "timeline_id": { "type": "string", "minLength": 1 },
+        "source_fingerprint": { "type": "string", "minLength": 1 },
+        "operations": { "type": "array", "items": { "$ref": "#/$defs/PlanOperation" } },
+        "approval_required": { "type": "boolean", "const": true },
+        "source_mutation": { "type": "string", "const": "forbid" },
+        "status": { "type": "string", "enum": ["planned", "preflight_failed", "awaiting_approval"] }
+      },
+      "required": ["schema_version", "plan_id", "project_id", "timeline_id", "source_fingerprint", "operations", "approval_required", "source_mutation", "status"],
+      "additionalProperties": false
+    },
+    "RecipeStep": {
+      "type": "object",
+      "properties": {
+        "step_id": { "type": "string", "minLength": 1 },
+        "action": { "type": "string", "enum": ["insert_media", "insert_audio", "insert_mogrt", "add_caption", "split_clip", "add_marker"] },
+        "asset_id": { "type": "string", "minLength": 1 },
+        "track": { "$ref": "#/$defs/TrackReference" },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "duration_frames": { "type": "integer", "minimum": 1 },
+        "required_capability": { "type": "string", "minLength": 1 },
+        "condition": { "type": "object" },
+        "field_mapping": { "type": "object", "additionalProperties": { "type": "string" } },
+        "metadata": { "type": "object" }
+      },
+      "required": ["step_id", "action", "track", "start_frame", "duration_frames"],
+      "additionalProperties": false
+    },
+    "EditingRecipe": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "recipe_id": { "type": "string", "minLength": 1 },
+        "recipe_version": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "inputs": { "type": "object" },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/RecipeStep" } },
+        "policies": {
+          "type": "object",
+          "properties": {
+            "preview": { "type": "boolean", "const": true },
+            "approval_required": { "type": "boolean", "const": true },
+            "clone_sequence": { "type": "boolean", "const": true },
+            "source_mutation": { "type": "string", "const": "forbid" },
+            "collision_policy": { "type": "string", "enum": ["block", "skip", "overlay"] },
+            "missing_asset": { "type": "string", "enum": ["fail", "partial", "skip"] }
+          },
+          "required": ["preview", "approval_required", "clone_sequence", "source_mutation", "collision_policy", "missing_asset"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["schema_version", "recipe_id", "recipe_version", "name", "inputs", "steps", "policies"],
+      "additionalProperties": false
+    },
+    "TranscriptSegment": {
+      "type": "object",
+      "properties": {
+        "segment_id": { "type": "string", "minLength": 1 },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "end_frame": { "type": "integer", "minimum": 1 },
+        "text": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "speaker_id": { "type": "string" }
+      },
+      "required": ["segment_id", "start_frame", "end_frame", "text"],
+      "additionalProperties": false
+    },
+    "Transcript": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "project_id": { "type": "string", "minLength": 1 },
+        "source_asset_id": { "type": "string", "minLength": 1 },
+        "language": { "type": "string", "minLength": 2 },
+        "frame_rate": { "$ref": "#/$defs/Rational" },
+        "segments": { "type": "array", "items": { "$ref": "#/$defs/TranscriptSegment" } }
+      },
+      "required": ["schema_version", "project_id", "source_asset_id", "language", "frame_rate", "segments"],
+      "additionalProperties": false
+    },
+    "SubtitleCue": {
+      "type": "object",
+      "properties": {
+        "cue_id": { "type": "string", "minLength": 1 },
+        "start_frame": { "type": "integer", "minimum": 0 },
+        "end_frame": { "type": "integer", "minimum": 1 },
+        "text": { "type": "string" },
+        "speaker_id": { "type": "string" }
+      },
+      "required": ["cue_id", "start_frame", "end_frame", "text"],
+      "additionalProperties": false
+    },
+    "Subtitle": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "project_id": { "type": "string", "minLength": 1 },
+        "language": { "type": "string", "minLength": 2 },
+        "frame_rate": { "$ref": "#/$defs/Rational" },
+        "cues": { "type": "array", "items": { "$ref": "#/$defs/SubtitleCue" } }
+      },
+      "required": ["schema_version", "project_id", "language", "frame_rate", "cues"],
+      "additionalProperties": false
+    },
+    "Diagnostic": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "severity": { "type": "string", "enum": ["info", "warning", "error"] },
+        "message": { "type": "string", "minLength": 1 },
+        "path": { "type": "string" },
+        "details": { "type": "object" }
+      },
+      "required": ["code", "severity", "message"],
+      "additionalProperties": false
+    },
+    "ExecutionResult": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "run_id": { "type": "string", "minLength": 1 },
+        "plan_id": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["planned", "preflight_failed", "awaiting_approval", "completed", "partial_success", "failed", "interrupted"] },
+        "stage": { "type": "string", "minLength": 1 },
+        "source_fingerprint": { "type": "string", "minLength": 1 },
+        "applied_operation_ids": { "type": "array", "items": { "type": "string" } },
+        "diagnostics": { "type": "array", "items": { "$ref": "#/$defs/Diagnostic" } },
+        "source_mutations": { "type": "integer", "const": 0 },
+        "external_writes": { "type": "integer", "const": 0 },
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": ["string", "null"], "format": "date-time" }
+      },
+      "required": ["schema_version", "run_id", "plan_id", "status", "stage", "source_fingerprint", "applied_operation_ids", "diagnostics", "source_mutations", "external_writes", "started_at"],
+      "additionalProperties": false
+    },
+    "Checkpoint": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "run_id": { "type": "string", "minLength": 1 },
+        "project_id": { "type": "string", "minLength": 1 },
+        "source_fingerprint": { "type": "string", "minLength": 1 },
+        "completed_step_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "pending_step_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schema_version", "run_id", "project_id", "source_fingerprint", "completed_step_ids", "pending_step_ids", "updated_at"],
+      "additionalProperties": false
+    },
+    "ValidationCheck": {
+      "type": "object",
+      "properties": {
+        "check_id": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["pass", "fail", "pending_host_validation", "not_run"] },
+        "summary": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["check_id", "status", "summary"],
+      "additionalProperties": false
+    },
+    "ValidationReport": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "report_id": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["pass", "partial", "fail", "pending_host_validation"] },
+        "checks": { "type": "array", "items": { "$ref": "#/$defs/ValidationCheck" } },
+        "diagnostics": { "type": "array", "items": { "$ref": "#/$defs/Diagnostic" } },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schema_version", "report_id", "scope", "status", "checks", "diagnostics", "created_at"],
+      "additionalProperties": false
+    },
+    "CapabilityDeclaration": {
+      "type": "object",
+      "properties": {
+        "capability_id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" },
+        "availability": { "type": "string", "enum": ["available", "unavailable", "unknown"] },
+        "evidence": { "type": "string" }
+      },
+      "required": ["capability_id", "version", "required", "availability"],
+      "additionalProperties": false
+    },
+    "AgentTask": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "task_id": { "type": "string", "minLength": 1 },
+        "project_id": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "enum": ["workflow_manager", "media_processing", "editing_automation", "quality_assurance", "release_documentation"] },
+        "goal": { "type": "string", "minLength": 1 },
+        "inputs": { "type": "object" },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "acceptance_criteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schema_version", "task_id", "project_id", "role", "goal", "inputs", "constraints", "acceptance_criteria", "created_at"],
+      "additionalProperties": false
+    },
+    "AgentResult": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "task_id": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["completed", "partial", "blocked", "failed"] },
+        "summary": { "type": "string", "minLength": 1 },
+        "artifact_refs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "validation_report_id": { "type": "string" },
+        "diagnostics": { "type": "array", "items": { "$ref": "#/$defs/Diagnostic" } },
+        "completed_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schema_version", "task_id", "status", "summary", "artifact_refs", "diagnostics", "completed_at"],
+      "additionalProperties": false
+    },
+    "ExtensionManifest": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "$ref": "#/$defs/SchemaVersion" },
+        "extension_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+        "extension_version": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "framework_compatibility": { "type": "object", "properties": { "minimum": { "type": "string" }, "maximum": { "type": "string" } }, "required": ["minimum"], "additionalProperties": false },
+        "capabilities": { "type": "array", "items": { "$ref": "#/$defs/CapabilityDeclaration" } },
+        "schemas": { "type": "array", "items": { "type": "string" } },
+        "asset_roots": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "actions": { "type": "array", "items": { "type": "object", "properties": { "action_id": { "type": "string", "minLength": 1 }, "label": { "type": "string", "minLength": 1 }, "recipe_id": { "type": "string", "minLength": 1 } }, "required": ["action_id", "label", "recipe_id"], "additionalProperties": false } }
+      },
+      "required": ["schema_version", "extension_id", "extension_version", "name", "framework_compatibility", "capabilities", "schemas", "asset_roots", "actions"],
+      "additionalProperties": false
+    }
+  }
+}

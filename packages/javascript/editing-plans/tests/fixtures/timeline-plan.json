@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "plan_id": "sample-edit@1.0.0",
+  "sequence_id": "fixture-sequence",
+  "operations": [
+    {
+      "id": "intro",
+      "action": "insert_media",
+      "track": {"type": "video", "index": 1},
+      "start": 0,
+      "duration": 5,
+      "asset": {"id": "intro.png", "kind": "media"},
+      "source_cue": {"in": 0, "out": 5},
+      "provenance": {"source_id": "fixture:recipe", "captured_at": "2026-08-26"},
+      "metadata": {"recipe_step_type": "intro", "order": 0}
+    },
+    {
+      "id": "information",
+      "action": "insert_mogrt",
+      "track": {"type": "video", "index": 5},
+      "start": 0,
+      "duration": 5,
+      "asset": {"id": "information.mogrt", "kind": "mogrt"},
+      "provenance": {"source_id": "fixture:recipe", "captured_at": "2026-08-26"},
+      "metadata": {"recipe_step_type": "information_template", "order": 1}
+    }
+  ]
+}
+

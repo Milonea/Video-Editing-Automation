@@ -1,0 +1,8 @@
+{
+  "guid": "fixture-source-sequence",
+  "sequence_id": "fixture-sequence",
+  "inventory": [
+    {"id": "base-clip", "track": {"type": "video", "index": 0}, "start": 0, "duration": 20}
+  ]
+}
+

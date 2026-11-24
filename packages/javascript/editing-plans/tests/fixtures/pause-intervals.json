@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "allow_cut": false,
+  "intervals": [
+    {"id": "pause-1", "start": 3, "end": 5, "padding": 0.1, "track_group": "all", "approved": true, "provenance": {"source_id": "fixture:review", "captured_at": "2026-08-26"}}
+  ]
+}
+
