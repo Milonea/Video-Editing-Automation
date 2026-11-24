@@ -2,7 +2,7 @@
 
 ## 설계 상태
 
-현재 실제 코드는 공통 계약과 검증 기반에 한정됩니다. Media Engine과 Premiere Integration은 이 저장소에 아직 없습니다. 아래 흐름은 구현 목표이며, 실제 호스트 동작이 완료된 아키텍처로 간주하지 않습니다.
+공통 계약, Python 미디어 엔진, Smart Silence UXP 패널, JavaScript 편집 계획기와 Premiere 공통 안전 모듈이 이전되었습니다. 계약과 계획 검증은 자동 테스트 대상이며, Premiere API 실행 및 cross-platform 미디어 작업은 실제 호스트 검증 전까지 완료로 간주하지 않습니다.
 
 ```mermaid
 flowchart TD
@@ -16,11 +16,11 @@ flowchart TD
 
 | 계층 | 입력과 출력 | 주요 책임 |
 | --- | --- | --- |
-| Contracts | JSON 문서 ↔ 버전이 지정된 Schema | 프레임 시간, 자산 ID, 실행 상태, Extension과 Agent 전달 형식 |
-| Workspace | Workspace ID + 상대 경로 ↔ 로컬 마운트 | 경로 재연결, Unicode 정규화, 외부 Workspace 확인 |
-| Media Engine | 미디어와 프로젝트 Manifest ↔ Transcript/Timeline/Plan | FFprobe, FFmpeg, 전사, 자막, 체크포인트와 검증 |
-| Editor Adapter | Edit Plan + Capability ↔ 실행 결과 | 편집기별 API, 충돌 점검, 별도 시퀀스와 승인 |
-| Extensions | 선언형 Manifest/Schema/Recipe ↔ 등록된 Action | 콘텐츠별 데이터와 기능을 코어 밖에서 제공 |
+| Contracts | JSON 문서 ↔ 버전이 지정된 Schema | 프레임 시간, 자산 ID, 실행 상태, Extension과 Agent 전달 형식; 구현 |
+| Workspace | Workspace ID + 상대 경로 ↔ 로컬 마운트 | 경로 재연결, Unicode 정규화, 외부 Workspace 확인; 코드 구현·실제 교차 검증 대기 |
+| Media Engine | 미디어와 프로젝트 Manifest ↔ Transcript/Timeline/Plan | FFprobe, FFmpeg, 전사, 자막, 체크포인트와 검증; 코드 이전·단위 테스트 |
+| Editor Adapter | Edit Plan + Capability ↔ 실행 결과 | Smart Silence UXP 및 Preflight/승인 공통 계약; host adapter/실제 Premiere 검증 대기 |
+| Extensions | 선언형 Manifest/Schema/Recipe ↔ 등록된 Action | 공통 Schema 및 기존 planner 이전; 부분 frame adapter 구현, Extension loader 미구현 |
 
 ## 공통 시간 규격
 
@@ -35,7 +35,7 @@ flowchart TD
 입력 검증 → 자산 해석 → Edit Plan → Preflight → 미리보기 → 사용자 승인 → 복제본에서 실행 → 결과 검증 → 보고서/체크포인트
 ```
 
-실행 전에 계획을 변경하거나 다시 계산하면 이전 승인은 무효입니다. 충돌 정책은 기본 `block`이며 원본 수정과 자동 삭제는 계약에서 허용하지 않습니다. 부분 성공, 중단, 실패와 완전 성공은 별도 상태로 기록합니다.
+실행 전에 계획을 변경하거나 다시 계산하면 이전 승인은 무효입니다. 충돌 정책은 기본 `block`이며 원본 수정과 자동 삭제는 계약에서 허용하지 않습니다. Premiere 공통 삽입 계약은 Preflight 후 Dry-run 또는 명시적 approval을 요구합니다. 부분 성공, 중단, 실패와 완전 성공은 별도 상태로 기록합니다.
 
 ## 저장소와 Workspace
 

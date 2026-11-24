@@ -1,0 +1,11 @@
+# Copy this file to the machine-local VEA config path documented in
+# docs/CROSS_PLATFORM_DEVELOPMENT.md, then fill in paths for that computer.
+# Never commit the resulting config.toml.
+
+[workspace]
+workspace_id = "work-ssd"
+video_workspace_root = ""
+projects_relative_path = "VideoProjects"
+
+[environment]
+transcription_preference = "auto"

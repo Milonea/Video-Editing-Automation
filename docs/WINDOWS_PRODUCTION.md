@@ -4,7 +4,9 @@ Windows는 실제 미디어 제작과 Premiere Pro 검증의 우선 대상입니
 
 ## 현재 상태
 
-이번 저장소에는 프로덕션 미디어 엔진, 기존 CLI, UXP 패널 및 설치 스크립트가 없습니다. 사용자는 이 문서만으로 실제 프로젝트를 자동 처리할 수 없습니다. 라이선스 확인 후 엔진을 이전하고 실제 Windows 호스트에서 검증해야 합니다.
+VEA CLI, 미디어 엔진, Smart Silence UXP 패널과 Windows 설치 스크립트가 이전되어 있습니다. 다만 이번 대상 브랜치에서 Windows 생산환경 전체를 재검증하지 않았으므로, 실제 프로젝트 처리를 프로덕션 준비 완료로 표시하지 않습니다. 설치 후 실제 외장 Workspace와 Premiere 프로젝트의 백업 사본으로 체크리스트를 통과시켜야 합니다.
+
+기본 설치 스크립트는 Whisper/CUDA를 자동 설치하지 않습니다. CPU Whisper는 `-WithWhisper`, 검증된 CUDA 환경은 `-WithWhisper -WithCuda`를 명시해 선택합니다. 가벼운 코드 개발에는 Whisper/GPU 옵션을 생략합니다.
 
 ## 릴리스 전에 필요한 검증
 

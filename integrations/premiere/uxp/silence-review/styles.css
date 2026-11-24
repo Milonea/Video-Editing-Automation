@@ -1,0 +1,108 @@
+:root {
+  color-scheme: dark;
+  color: #f2f2f2;
+  background-color: #1e1e1e;
+  font-family: "Adobe Clean", "Segoe UI", sans-serif;
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  color: #f2f2f2;
+  background-color: #1e1e1e;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#track-targets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#track-targets[hidden] {
+  display: none;
+}
+
+fieldset {
+  border: 1px solid #555555;
+  border-radius: 4px;
+  margin: 0;
+  padding: 8px;
+}
+
+legend {
+  padding: 0 4px;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  min-height: 22px;
+}
+
+.track-option input {
+  margin: 2px 0 0;
+}
+
+h1 {
+  font-size: 17px;
+  margin: 0;
+}
+
+p {
+  line-height: 1.45;
+  margin: 0;
+}
+
+.notice {
+  border-left: 3px solid #e0a331;
+  padding: 8px 10px;
+  background: #3a2a10;
+  font-weight: 600;
+}
+
+button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: #ffffff;
+  background-color: #365fa8;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  color: #c0c0c0;
+  background-color: #454545;
+}
+
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0;
+  padding: 10px;
+  border-radius: 4px;
+  color: #f2f2f2;
+  background: #292929;
+  line-height: 1.4;
+}
+
+pre.error {
+  color: #ff8178;
+}

@@ -9,7 +9,7 @@ REQUIRED_TEXT = {
     "AGENTS.md": ["Use a task branch and pull request", "Do not force-push", "Never use a merge fallback to bypass a failed or unavailable check"],
     ".codex/PR_POLICY.md": ["A security, credential, access-control, privacy, or data-loss risk is unresolved", "Never treat missing check data as success"],
     ".codex/WORKFLOW.md": ["Never merge a stale head", "required CI checks"],
-    ".codex/PROJECT_PROFILE.md": ["원본 미디어·기존 시퀀스의 덮어쓰기/삭제 금지", "최종 프로젝트 라이선스는 미정"],
+    ".codex/PROJECT_PROFILE.md": ["원본 미디어·기존 시퀀스의 덮어쓰기/삭제 금지", "MIT License", "로컬에서 제작·수정하는 이미지/음원/MOGRT"],
 }
 
 

@@ -2,7 +2,7 @@
 
 ## 목표 데이터 경계
 
-소스 저장소와 개발 환경은 각 컴퓨터의 내장 SSD에 둡니다. 외장 SSD 또는 사용자 지정 Workspace에는 영상 원본, Premiere 프로젝트, 전사·자막, 타임라인 계획, 편집 산출물, 개인 Extension 및 체크포인트를 저장합니다.
+소스 저장소와 개발 환경은 각 컴퓨터의 내장 SSD에 둡니다. 외장 SSD 또는 사용자 지정 Workspace에는 영상 원본, Premiere 프로젝트, 전사·자막, 타임라인 계획, 편집 산출물, 개인 Extension, 사용자가 직접 제작·수정하는 이미지·음원·MOGRT 및 체크포인트를 저장합니다. 이 개인 자산은 Git에 커밋하지 않습니다.
 
 ## 식별 및 경로 규칙
 
@@ -15,6 +15,6 @@
 
 ## 현재 구현 상태
 
-이번 PR에는 Workspace resolver, manifest 생성·복구 명령 또는 실제 외장 디스크 테스트가 없습니다. 공통 계약과 설계 기준만 준비했습니다. 원본 Workspace 형식 변환기는 라이선스 기준 및 호환성 설계 이후 구현합니다.
+VEA의 Workspace Resolver와 안전한 상대경로 검사, 비덮어쓰기 manifest 생성, CLI dry-run 및 설정 우선순위가 이전되었습니다. manifest 기본 파일명은 `.vea-workspace.json`입니다. 기존 로컬 manifest는 원본을 보존한 채 새 이름으로 복사하고 Workspace ID와 프로젝트 상대경로를 확인한 다음 `vea workspace resolve`로 재검증하세요. 실제 외장 SSD의 양방향 macOS/Windows 전환 검증은 아직 수행하지 않았습니다.
 
 macOS와 Windows에서 동시 쓰기를 하지 말고, 프로젝트 저장을 마친 뒤 안전하게 분리합니다. 실제 경로 재연결은 양쪽 OS에서 검증되기 전까지 지원 완료로 보지 않습니다.

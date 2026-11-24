@@ -4,6 +4,6 @@
   "version": "0.1.0",
   "description": "Shared language-neutral contracts and JavaScript safety checks for Video Editing Automation.",
   "scripts": {
-    "test": "node --test packages/javascript/test/*.test.cjs"
+    "test": "node --test packages/javascript/test/*.test.cjs packages/javascript/editing-plans/tests/*.test.js integrations/premiere/shared/tests/*.test.js integrations/premiere/uxp/silence-review/tests/*.test.js"
   }
 }

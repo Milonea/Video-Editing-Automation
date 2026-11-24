@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>VEA Silence Review</title>
+  </head>
+  <body>
+    <main>
+      <h1>VEA Silence Review</h1>
+      <p class="notice">복제 시퀀스만 처리합니다. 후보 구간을 삭제하지 않습니다.</p>
+      <p>검증한 Premiere 프로젝트를 열고 VEA 계획에 적힌 시퀀스를 활성화하세요.</p>
+      <button id="prepare" type="button">계획 불러오기 및 확인</button>
+      <section id="track-targets" hidden>
+        <p id="track-target-note"><strong>분할할 트랙을 지정하세요.</strong> 선택한 트랙만 복제 시퀀스에서 처리합니다.</p>
+        <fieldset>
+          <legend>영상 트랙</legend>
+          <div id="video-tracks" class="track-list"></div>
+        </fieldset>
+        <fieldset>
+          <legend id="audio-track-legend">추가 오디오 트랙</legend>
+          <div id="audio-tracks" class="track-list"></div>
+        </fieldset>
+      </section>
+      <button id="apply" type="button" disabled>새 REVIEW 사본 저장 및 처리</button>
+      <pre id="status" role="status">원본 프로젝트 경로와 시퀀스를 먼저 확인합니다.</pre>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "ticks_per_second": 254016000,
+  "cues": [
+    {"cue_id": "cue-1", "start_ticks": 0, "end_ticks": 508032000, "text": "첫 cue", "provenance": {"source_id": "fixture:captions", "captured_at": "2026-08-26"}},
+    {"cue_id": "cue-2", "start_ticks": 1016064000, "end_ticks": 1524096000, "text": "둘째 cue", "provenance": {"source_id": "fixture:captions", "captured_at": "2026-08-26"}}
+  ]
+}
+

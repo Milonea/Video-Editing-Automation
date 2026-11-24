@@ -1,22 +1,28 @@
 # 기능 지원표
 
-이 표는 현재 공개 저장소에 존재하는 기능 상태의 단일 기준입니다. `계획`이나 `호스트 검증 대기`는 구현 완료를 의미하지 않습니다.
+이 표는 대상 브랜치에 실제 포함된 기능과 검증 상태의 기준입니다. 자동 테스트 통과, CI 통과, 실제 호스트 검증을 서로 구분합니다.
 
 | 기능 | 현재 상태 | 검증 근거 / 남은 작업 |
 | --- | --- | --- |
-| Schema v1: Project/Asset/Stream/Timeline | 초기 구현 | JSON Schema와 합성 Fixture 검사; 실제 엔진 연결 없음 |
-| Edit Plan / Recipe / Extension | Schema 구현 | 미리보기·승인·원본 보존 값 검증; 로더 및 실행기는 미구현 |
-| Transcript / Subtitle | Schema 구현 | 프레임 범위 검증; 전사 파이프라인 미이전 |
-| Execution / Diagnostic / Checkpoint / Validation Report | Schema 구현 | 구조 검사; 복구 가능한 실행기 미구현 |
-| Agent task/result | Schema 구현 | 범용 역할 이름만 정의; 별도 Agent framework 연동 없음 |
-| Python 계약 검사 | 구현 | JSON Schema Draft 2020-12와 안전 불변식 |
-| JavaScript 계약 검사 | 구현 | 공통 fixture 검사와 경로·프레임·승인 안전 불변식 |
-| 기존 `vea` CLI / FFmpeg / FFprobe | 차단 | 원본 라이선스 선언을 해결한 뒤 이전·회귀 테스트 필요 |
-| Whisper CPU/CUDA/MLX | 미구현/검증 대기 | MLX는 원본에서도 실행 백엔드 미구현; 다른 백엔드는 이식되지 않음 |
-| Smart Silence Split | 차단 | 계산/패널 이전과 Premiere 실제 시퀀스 검증 필요 |
-| Premiere UXP 통합 패널 | 차단 | 권리 승인 및 실제 host 검증 필요 |
-| 레거시 JSX / CEP / After Effects | 미확정 | 재배포 조건과 호스트 지원 버전 조사 필요 |
-| macOS↔Windows Workspace | 계획 | manifest/resolver 마이그레이션 및 실제 외장 볼륨 테스트 필요 |
-| 공개 배포 라이선스 | 미결정 | 원본 권리와 대상 프로젝트 라이선스 결정 전 |
+| 공통 contracts v1: Project/Asset/Stream/Timeline/Edit Plan/Recipe/Transcript/Extension/Agent | 구현 | JSON Schema, 합성 Fixture, Python/JavaScript 검사 |
+| Python 계약 검사 및 JavaScript 계약 검사 | 구현 | 공통 Fixture 검증 및 안전 불변식 단위 테스트 |
+| 기존 vea CLI | 코드 이전 | 명령 호환성을 유지; 엔진 pytest 회귀 테스트 실행 필요 |
+| VEA FFprobe/FFmpeg 미디어 분석, 다중 오디오, 전처리와 FCP7 XML | 코드 이전 | source test 이전; 실제 코덱·대용량 미디어 테스트 별도 |
+| 타임코드, CFR/VFR mapping, 자막, Glossary, checkpoint, version/report | 코드 이전 | 엔진 단위 회귀 테스트; 실제 파일과 cross-OS 검사 별도 |
+| Whisper CPU/CUDA | 코드 이전, host 검증 대기 | optional dependencies와 capability 검사; 실제 CPU/CUDA 런타임 미검증 |
+| Whisper MLX | 미구현 | 원본에서도 backend 실행 경로가 확인되지 않음 |
+| Smart Silence Split 계산 | 코드 이전 | Python 테스트와 합성 fixture; 실제 Premiere 결과는 별도 확인 |
+| Smart Silence Premiere UXP 검토 패널 | 코드 이전, host 검증 대기 | 순수 JS 테스트; 설치·토큰·시퀀스 동작 미재검증 |
+| Premiere Preflight / Dry-run / explicit approval | 공통 안전 모듈 구현 | Mock 테스트; 실제 UXP Adapter 미연결 |
+| 프로젝트별 Media Import Cache, error sanitization | 공통 모듈 이전 | Node.js 단위 테스트; Premiere 성능 검증 대기 |
+| Timeline Plan / Recipe planner | legacy planner 이전 + 부분 frame adapter | 원본 Node 테스트; 명시 FPS에서 프레임 정렬된 subset을 공통 EditPlan으로 변환, 비정렬 시간·미지원 action은 차단 |
+| 이미지/영상/MOGRT/오디오 편집 계획 | planner에 포함 | Asset 참조와 충돌 검사; 실제 Premiere 삽입은 host 미검증 |
+| Extension manifest 및 capability | Schema 구현 | 등록·호환성 검사·sandbox loader는 미구현 |
+| 고유 콘텐츠 UI/DB 및 personal extension | 공개 코어에서 제외 | 사용자는 로컬 Workspace에서 별도 유지; 공개 자산 미포함 |
+| JSX/CEP/After Effects | 미이전 | Adobe SDK 및 호스트별 권리/호환성 확인 후 결정 |
+| macOS↔Windows Workspace 교차 편집 | 코드 이전, 실제 검증 대기 | resolver/config/profile 구현; 외장 SSD 양방향 실측 미완료 |
+| development/lightweight/production/validation 설정 profile | 구현 | config merge unit test; OS별 실제 성능값은 검증 대기 |
+| MIT License | 설정 완료 | root LICENSE와 Python package metadata 일치; 로컬/제3자 자산은 범위 밖 |
+| Windows/Premiere/GPU/Apple Silicon 릴리스 준비 | Pending host validation | 이 실행 환경에서 실기기 검증 수행하지 않음 |
 
-CI 상태가 통과해도 실제 Premiere, 하드웨어, 외장 디스크 기능을 완료 처리하지 않습니다.
+`PENDING_HOST_VALIDATION`는 자동화 검증만으로 완료 처리하지 않는 호스트·하드웨어 검증 상태입니다.

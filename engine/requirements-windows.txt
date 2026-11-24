@@ -1,0 +1,10 @@
+# GPU transcription dependencies.
+# faster-whisper 1.2.1 passes metadata_errors to av.open(); PyAV 19 removed that
+# argument, so keep PyAV below 19 until a compatible faster-whisper release is pinned.
+# Install after creating the project environment:
+av>=11,<19
+faster-whisper==1.2.1
+# CTranslate2 loads CUDA libraries dynamically on Windows. These NVIDIA-owned
+# CUDA 12 runtime wheels keep the libraries inside the project venv.
+nvidia-cublas-cu12==12.9.1.4
+nvidia-cuda-runtime-cu12==12.9.79

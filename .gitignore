@@ -1,4 +1,5 @@
 .venv/
+.venv-*/
 venv/
 node_modules/
 __pycache__/
@@ -9,6 +10,8 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
+.eggs/
+*.egg-info/
 .mypy_cache/
 .ruff_cache/
 .DS_Store
@@ -19,6 +22,15 @@ Thumbs.db
 *.prproj
 *.aep
 *.mogrt
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.svg
 *.mp4
 *.mov
 *.mxf
@@ -26,3 +38,8 @@ Thumbs.db
 *.wav
 *.mp3
 *.m4a
+*.aac
+*.flac
+.vea-workspace.json
+extensions/local/
+assets/local/

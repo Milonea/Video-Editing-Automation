@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "sample-edit",
+  "version": "1.0.0",
+  "inputs": {
+    "sequence_id": "fixture-sequence",
+    "assets": {
+      "intro": "intro.png",
+      "information": "information.mogrt",
+      "sfx": "whoosh.wav"
+    }
+  },
+  "policies": {
+    "clone_sequence": true,
+    "dry_run": false,
+    "preview": true,
+    "approval_required": true,
+    "partial_success": true,
+    "missing_asset": "partial",
+    "unsupported_host": "blocked",
+    "collision": "reject"
+  },
+  "steps": [
+    {
+      "id": "intro",
+      "type": "intro",
+      "order": 0,
+      "track": {"type": "video", "index": 1},
+      "start": 0,
+      "duration": 5,
+      "asset": "intro"
+    },
+    {
+      "id": "information",
+      "type": "information_template",
+      "order": 1,
+      "track": {"type": "video", "index": 5},
+      "start": 0,
+      "duration": 5,
+      "asset": "information",
+      "required_host_capability": "mogrt-insert"
+    },
+    {
+      "id": "sfx",
+      "type": "sfx",
+      "order": 2,
+      "track": {"type": "audio", "index": 2},
+      "start": 0,
+      "duration": 2,
+      "asset": "sfx",
+      "required_host_capability": "audio-overwrite"
+    }
+  ],
+  "provenance": {"source_id": "fixture:recipe", "captured_at": "2026-08-26"}
+}
+

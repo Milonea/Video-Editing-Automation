@@ -4,8 +4,12 @@
 
 ## Unreleased — 2026-11-24
 
-- 공유 계약 Schema v1과 전 계약 합성 Fixture를 추가했습니다.
-- Python JSON Schema 검증기와 Workspace 상대 경로·타임라인 프레임 범위 등 안전 검사를 추가했습니다.
-- JavaScript 런타임 안전 검사와 동일 Fixture 검증을 추가했습니다.
-- 원본 코드 라이선스 충돌과 미확인 편집 자산을 Migration Matrix 및 공개 정책에 기록했습니다.
-- 실제 미디어 엔진, Premiere 호스트 및 Windows 프로덕션 지원은 미구현 또는 검증 대기 상태로 명시했습니다.
+- 기존 VEA Python 엔진, `vea` CLI, Workspace Resolver, config와 회귀 테스트를 clean-history 브랜치에 이전했습니다.
+- Smart Silence 검토용 Premiere UXP 패널과 Node.js 순수 로직 테스트를 이전했습니다.
+- automation_VESupport의 Timeline Plan, Recipe, 이미지·자막·무음 planner, 안전 편집 primitive와 legacy fixture를 범용화해 이전했습니다.
+- 초 단위 legacy edit plan을 정수 프레임 기반 공통 EditPlan으로 바꾸는 명시적 adapter를 추가했습니다. 프레임 정렬 오류와 미지원 action은 추측하거나 반올림하지 않고 차단합니다.
+- Premiere 실행 공통 계약에 Preflight, Dry-run, 명시적 approval gate, error sanitization과 project cache 모듈을 추가했습니다.
+- common/OS/profile/local/project/explicit/task 설정 병합, development/lightweight/production/validation 프로필 및 CLI `--profile`을 추가했습니다.
+- macOS/Windows 설치 스크립트를 경량 기본 설치로 바꾸고 Whisper CPU/CUDA 의존성을 명시적으로 선택하게 했습니다.
+- 개인 Persona 필드와 사용자 Workspace 식별자를 범용화하고 개인 제작 이미지·음원·MOGRT·콘텐츠 DB·Adobe SDK는 공개 저장소에서 제외했습니다.
+- 대상 템플릿 정책을 유지하고 한국어 마이그레이션·보안·플랫폼·호스트 검증 문서를 갱신했습니다.

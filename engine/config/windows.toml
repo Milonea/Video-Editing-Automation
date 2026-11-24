@@ -1,0 +1,7 @@
+[transcription]
+# `auto` uses CUDA only when CTranslate2 reports a usable CUDA device.
+device = "auto"
+compute_type = "auto"
+
+[runtime]
+ffmpeg_threads = 1

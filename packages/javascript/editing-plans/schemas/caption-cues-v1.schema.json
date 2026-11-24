@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "caption-cues-v1",
+  "type": "object",
+  "required": ["schema_version", "ticks_per_second", "cues"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "ticks_per_second": {"type": "number", "exclusiveMinimum": 0},
+    "cues": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/cue"}}
+  },
+  "$defs": {
+    "provenance": {"type": "object", "required": ["source_id"], "properties": {"source_id": {"type": "string", "minLength": 1}, "source_url": {"type": "string", "format": "uri"}, "captured_at": {"type": "string"}}, "additionalProperties": true},
+    "cue": {
+      "type": "object",
+      "required": ["cue_id", "start_ticks", "end_ticks", "provenance"],
+      "properties": {
+        "cue_id": {"type": "string", "minLength": 1},
+        "start_ticks": {"type": "integer", "minimum": 0},
+        "end_ticks": {"type": "integer", "minimum": 1},
+        "ticks_per_second": {"type": "number", "exclusiveMinimum": 0},
+        "text": {"type": ["string", "null"]},
+        "provenance": {"$ref": "#/$defs/provenance"}
+      },
+      "additionalProperties": true
+    }
+  }
+}
+

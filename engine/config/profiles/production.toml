@@ -1,0 +1,11 @@
+# Production defaults do not guarantee that the requested backend is available.
+[transcription]
+model = "large-v3"
+fallback_models = ["large-v3-turbo", "medium"]
+device = "auto"
+compute_type = "auto"
+beam_size = 5
+chunk_seconds = 600
+
+[runtime]
+ffmpeg_threads = 1

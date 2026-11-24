@@ -11,7 +11,8 @@
 - [ ] VFR 입력 분석, CFR 변환 map, 컷/자막 frame sync 확인
 - [ ] 실제 Premiere Pro에서 UXP 패널 로드와 Capability 보고 확인
 - [ ] Clone sequence 생성, 원본 sequence 보존, 잠긴 트랙 및 충돌 차단 확인
-- [ ] 범용 이미지·오디오·MOGRT를 별도 승인 후 삽입하고 결과 재확인
+- [ ] 합성 또는 재배포 허가 자산만 사용해 승인 전 차단·승인 후 삽입을 확인
+- [ ] 개인 제작 이미지·음원·MOGRT는 Workspace 밖으로 복사하지 않고 로컬에서만 확인
 - [ ] JSX/CEP 호환을 지원 대상 버전별로 확인
 - [ ] FCP7 XML import 후 audio stream, frame rate, caption sync 확인
 - [ ] 장시간/대용량 처리의 CPU·GPU·RAM·disk peak 기록
